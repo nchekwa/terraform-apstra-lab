@@ -1,0 +1,15 @@
+---
+agent_profiles:
+  junos-default:
+    username: aosadmin
+    password: aosadmin123
+    platform: junos 
+ 
+
+
+managed_devices:
+  junos-default:
+    - 10.10.2.111
+    - 10.10.2.112
+    - 10.10.2.113
+    - 10.10.2.114

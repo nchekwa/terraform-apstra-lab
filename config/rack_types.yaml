@@ -1,0 +1,19 @@
+rack_types:
+  server-rack:
+    name: DC-server-rack
+    description: server rack
+    fabric_connectivity_design: l3clos
+    leaf_switches:
+    - logical_device: AOS-20x1+4x10-vEX9214
+      spine_link_count: 1
+      spine_link_speed: 10G
+      redundancy_protocol: esi
+  border-rack:
+    name: DC-border-rack
+    description: border rack
+    fabric_connectivity_design: l3clos
+    leaf_switches:
+    - logical_device: AOS-20x1+4x10-vEX9214
+      spine_link_count: 1
+      spine_link_speed: 10G
+      redundancy_protocol: esi

@@ -1,0 +1,21 @@
+resources:
+  asn_pool:
+    dc1-asn:
+    - first: 4200000000
+      last: 4200001000
+  vni_pool:
+    dc1-vni:
+    - first: 200000
+      last: 600000
+  integer_pool:
+    dc1-int:
+    - first: 1000
+      last: 2000
+  ipv4_pool:
+    loopback:
+    - 10.0.0.0/24
+    fabric-network:
+    - 10.0.1.0/24
+  ipv6_pool:
+    fabric-network:
+    - 2001:db8::/32

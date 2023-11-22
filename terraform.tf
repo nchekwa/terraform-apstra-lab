@@ -2,7 +2,8 @@ terraform {
     required_providers {
     apstra = {
         source = "Juniper/apstra"
-    }
+        version = "0.43.0"
+      }
     }
 }
 
@@ -23,7 +24,7 @@ variable "apstra_credentials" {
   default = {
     username = "admin"
     password = "admin"
-    ip       = "10.10.2.253"
+    ip       = "172.30.108.195"
   }
 }
 
@@ -53,8 +54,14 @@ data "external" "get_access_token" {
 locals {
   access_token = data.external.get_access_token.result.access_token
 }
+#output "access_token" {  value = var.debug ? local.access_token : null}
 
-#output "access_token" {
-#  value = var.debug ? local.access_token : null
-#}
-
+######################################
+### Debug Enable
+# bash>
+# export TF_LOG=”DEBUG”
+# export TF_LOG_PATH="/mnt/github/terraform-apstra-lab/terraform-debug.log"
+# echo $TF_LOG
+# echo $TF_LOG_PATH
+# unset TF_LOG
+# unset TF_LOG_PATH

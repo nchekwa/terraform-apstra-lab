@@ -1,0 +1,11 @@
+templates:
+  DC-template:
+    name: DC1
+    asn_allocation_scheme: unique
+    overlay_control_protocol: evpn
+    spine:
+      logical_device: AOS-20x1+4x10-vEX9214
+      count: 2
+    racks:
+      #server-rack: 1
+      border-rack: 1
