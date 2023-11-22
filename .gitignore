@@ -1,7 +1,0 @@
-.terraform/
-.vscode/
-.terraform.local.hcl
-.terraform.lock.hcl
-terraform.tfstate
-terraform.tfstate.backup
-.gitignore
