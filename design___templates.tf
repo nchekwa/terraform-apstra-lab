@@ -31,10 +31,6 @@ locals {
 output "debug_spine_logical_device_ids" { value = var.debug ? local.spine_logical_device_ids : null }
 
 
-
-
-
-
 resource "apstra_template_rack_based" "r" {
   for_each                  = local.templates
   name                      = each.key
@@ -48,5 +44,5 @@ resource "apstra_template_rack_based" "r" {
     for label, count in each.value.racks:
       apstra_rack_type.all[label].id => { count = count }
   }
-  #depends_on = [ apstra_rack_type.all ]
+
 }
