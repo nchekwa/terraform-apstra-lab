@@ -1,4 +1,5 @@
-#### template
+#################################################
+### Template
 variable "templates_file_path" {
   description = "Path to the YAML file - templates"
   default     = "/config/templates.yaml"
@@ -8,41 +9,41 @@ locals {
   templates_data = try(yamldecode(local.templates_file_yaml)["templates"], {})
   templates = can(local.templates_data) && length(keys(coalesce(local.templates_data, {}))) > 0 ? local.templates_data : {}
 }
+#################################################
 
-
-##############################################
-## Get Maping Spine "LogicalDevice"=>"ID"
+#################################################
+### Get Maping Spine "LogicalDevice"=>"ID"
 locals {
-  templates_spine_names = flatten([
+  logical_devices_for_templates = flatten([
     for template_name, template in local.templates : template.spine.logical_device
   ])
 }
-output "debug_templates_spine_names" { value = var.debug ? local.templates_spine_names : null }
-
-data "apstra_logical_device" "spines" {
-  for_each = { for aos_model in local.templates_spine_names : aos_model => aos_model }
+data "apstra_logical_device" "selected_for_templates" {
+  for_each = { for aos_model in local.logical_devices_for_templates : aos_model => aos_model }
   name = each.value
 }
 locals {
-  spine_logical_device_ids = {
-    for key, value in data.apstra_logical_device.spines : key => value.id
+  logical_devices_for_templates_ids = {
+    for key, value in data.apstra_logical_device.selected_for_templates : key => value.id
   }
 }
-output "debug_spine_logical_device_ids" { value = var.debug ? local.spine_logical_device_ids : null }
+output "debug_logical_devices_for_templates_ids" { value = var.debug ? local.logical_devices_for_templates_ids : null }
+#################################################
 
-
+#################################################
+## Create Templates
 resource "apstra_template_rack_based" "r" {
-  for_each                  = local.templates
+  for_each                  = can(local.templates) ? local.templates : {}
   name                      = each.key
   asn_allocation_scheme     = each.value.asn_allocation_scheme
   overlay_control_protocol  = each.value.overlay_control_protocol
   spine = {
-    logical_device_id = local.spine_logical_device_ids[each.value.spine.logical_device]
+    logical_device_id = local.logical_devices_for_templates_ids[each.value.spine.logical_device]
     count = 2
   }
   rack_infos = {
     for label, count in each.value.racks:
       apstra_rack_type.all[label].id => { count = count }
   }
-
 }
+#################################################

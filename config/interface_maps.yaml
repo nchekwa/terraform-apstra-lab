@@ -1,0 +1,26 @@
+interface_maps:
+  ifmap-spine:
+    name: spine-example
+    logical_device: spine-example
+    device_profile_id: Juniper_QFX10002-36Q_Junos
+    device_mapping:
+    - ld_panel: 1
+      ld_first_port: 1
+      phy_prefix: et-0/0/
+      phy_first_port: 0
+      count: 36
+  ifmap-border-leaf:
+    name: terra-border-leaf
+    logical_device: border-leaf-example
+    device_profile_id: Juniper_QFX5120-48Y_Junos
+    device_mapping:
+    - ld_panel: 1
+      ld_first_port: 1
+      phy_prefix: xe-0/0/
+      phy_first_port: 0
+      count: 24
+    - ld_panel: 1
+      ld_first_port: 25
+      phy_prefix: et-0/0/
+      phy_first_port: 24
+      count: 32

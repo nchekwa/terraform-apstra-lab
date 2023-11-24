@@ -1,0 +1,27 @@
+logical_devices:
+  spine-example:
+    name: spine-example
+    #blueprint: DC1
+    panels:
+    - rows: 2
+      columns: 18
+      port_groups:
+      - port_count: 36
+        port_speed: 40G
+        port_roles: [ 'leaf', 'generic']
+  border-leaf:
+    name: border-leaf-example
+    #blueprint: DC1
+    panels:
+    - rows: 2
+      columns: 28
+      port_groups:
+      - port_count: 24
+        port_speed: 10G
+        port_roles: [ 'access', 'generic']
+      - port_count: 24
+        port_speed: 25G
+        port_roles: [ 'access', 'generic']
+      - port_count: 8
+        port_speed: 40G
+        port_roles: [ 'spine', 'generic']

@@ -1,3 +1,4 @@
+#################################################
 terraform {
     required_providers {
     apstra = {
@@ -6,7 +7,9 @@ terraform {
       }
     }
 }
+#################################################
 
+#################################################
 # In case of debug needed - run:
 # terraform apply -var="debug=true"
 variable "debug" {
@@ -14,7 +17,9 @@ variable "debug" {
   type        = bool
   default     = false
 }
+#################################################
 
+#################################################
 # Apstra credentials can be supplied through environment variables:
 #export APSTRA_USER=<username>
 #export APSTRA_PASS=<password>
@@ -24,7 +29,7 @@ variable "apstra_credentials" {
   default = {
     username = "admin"
     password = "admin"
-    ip       = "172.30.108.195"
+    ip       = "172.30.108.196"
   }
 }
 
@@ -35,9 +40,9 @@ provider "apstra" {
   api_timeout               = 60                           # optional; 0 == infinite
   experimental              = true
 }
+#################################################
 
-
-######################################
+#################################################
 ### Get Access token for Curl Commands
 data "external" "get_access_token" {
   program = ["bash", "-c", <<-EOT
@@ -54,14 +59,6 @@ data "external" "get_access_token" {
 locals {
   access_token = data.external.get_access_token.result.access_token
 }
-#output "access_token" {  value = var.debug ? local.access_token : null}
+output "access_token" {  value = var.debug ? local.access_token : null}
+#################################################
 
-######################################
-### Debug Enable
-# bash>
-# export TF_LOG=”DEBUG”
-# export TF_LOG_PATH="/mnt/github/terraform-apstra-lab/terraform-debug.log"
-# echo $TF_LOG
-# echo $TF_LOG_PATH
-# unset TF_LOG
-# unset TF_LOG_PATH
